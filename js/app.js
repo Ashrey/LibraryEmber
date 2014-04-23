@@ -86,25 +86,26 @@ Libros.LibrosController = Ember.ArrayController.extend({
 
 Libros.LibroController = Ember.ObjectController.extend({
   actions: {
-    editLibroTitle: function() {
-         this.set('editingTitle', true);
-    },
-
-    editLibroAuthor: function() {
-         this.set('editingAuthor', true);
+    editLibro: function() {
+        if(this.get('editing')){
+            this.send('acceptChanges');
+        }else{
+            this.set('editing', true);
+            this.set('labelButton', 'Save');
+            this.set('btnType', 'btn-primary');
+        }
     },
 
     acceptChanges: function () {
-      this.set('editingTitle', false);
-      this.set('editingAuthor', false);
-      if (Ember.isEmpty(this.get('model.title'))) {
-        this.send('removeLibro');
-      } else {
-        this.get('model').save();
-      }
+      this.set('editing', false);
+      this.set('labelButton', 'Edit');
+      this.set('btnType', 'btn-warning');
+      this.get('model').save();
     },
 
     removeLibro: function () {
+        if(!confirm("Are you sure?"))
+            return;
       var todo = this.get('model');
       todo.deleteRecord();
       todo.save();
@@ -112,7 +113,9 @@ Libros.LibroController = Ember.ObjectController.extend({
 
   },
 
-  editingTitle: false
+  editing: false,
+  btnType: 'btn-warning',
+  labelButton: 'Edit'
 });
 
 /*view*/

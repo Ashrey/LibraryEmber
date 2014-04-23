@@ -17,24 +17,17 @@
         </tr>
         {{#each itemController="libro"}}
             <tr>
-            <td {{action "editLibroTitle" on="doubleClick"}}>
-            {{#if editingTitle}}
-                {{edit-libro class="edit form-control" value=title focus-out="acceptChanges"
-                           insert-newline="acceptChanges"}}
-            {{else}}
-                {{title}}
-            {{/if}}
-            </td>
-            <td {{action "editLibroAuthor" on="doubleClick"}}>
-                {{#if editingAuthor}}
-                    {{edit-libro class="edit form-control" value=author focus-out="acceptChanges"
-                           insert-newline="acceptChanges"}}
-                {{else}}
-                    {{author}}
-                {{/if}}
-            </td>
+            {{#if editing}}
             <td>
-
+                {{edit-libro class="edit form-control" value=title}} </td>
+            <td>{{edit-libro class="edit form-control" value=author}}</td>
+            {{else}}
+                <td>{{title}}</td>
+                <td>{{author}}</td>
+            {{/if}}
+            
+            <td>
+            <button {{action "editLibro"}}  {{bind-attr class=":btn btnType"}}><i class="glyphicon glyphicon-edit"></i>{{labelButton}}</button>
             <button {{action "removeLibro"}} class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i>Remove</button>
             </td>
             </tr>
@@ -48,7 +41,7 @@
 
   <header>
       <h1>My Library</h1>
-        <div class="alert alert-info">Double-click to edit a Book</div>
+        <div class="alert alert-info">Click "edit" and after on "Save" </div>
         <form class="form-inline">
             {{input type="text" id="new-todo" class="form-control" placeholder="Title" 
               value=newTitle}}
@@ -61,7 +54,7 @@
     {{outlet}}
 
   <footer id="info">
-    <div class="alert alert-info">Double-click to edit a Book</div>
+    <div class="alert alert-info">Click "edit"</div>
   </footer>
   </div>
   </script>
