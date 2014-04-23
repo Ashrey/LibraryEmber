@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Prueba</title>
+        <link href="css/bootstrap.min.css" rel="stylesheet" />
+        <meta charset='utf-8'> 
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+    <script type="text/x-handlebars" data-template-name="libros/index">
+        <table class="table">
+        <summary> Total Book: {{ltotal}}</summary>
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Remove</th>
+        </tr>
+        {{#each itemController="libro"}}
+            <tr>
+            <td {{action "editLibroTitle" on="doubleClick"}}>
+            {{#if editingTitle}}
+                {{edit-libro class="edit form-control" value=title focus-out="acceptChanges"
+                           insert-newline="acceptChanges"}}
+            {{else}}
+                {{title}}
+            {{/if}}
+            </td>
+            <td {{action "editLibroAuthor" on="doubleClick"}}>
+                {{#if editingAuthor}}
+                    {{edit-libro class="edit form-control" value=author focus-out="acceptChanges"
+                           insert-newline="acceptChanges"}}
+                {{else}}
+                    {{author}}
+                {{/if}}
+            </td>
+            <td>
+
+            <button {{action "removeLibro"}} class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i>Remove</button>
+            </td>
+            </tr>
+        {{/each}}
+        </table>
+    </script>
+
+
+  <script type="text/x-handlebars" data-template-name="libros">
+      <div class="container">
+
+  <header>
+      <h1>My Library</h1>
+        <div class="alert alert-info">Double-click to edit a Book</div>
+        <form class="form-inline">
+            {{input type="text" id="new-todo" class="form-control" placeholder="Title" 
+              value=newTitle}}
+            {{input type="text" id="new-todo1" class="form-control" placeholder="Author" 
+              value=newAuthor }}
+            <button {{action "createLibro"}} class="btn btn-success"><i class="glyphicon glyphicon-ok">Add</i>
+        </form>
+    </header>
+    
+    {{outlet}}
+
+  <footer id="info">
+    <div class="alert alert-info">Double-click to edit a Book</div>
+  </footer>
+  </div>
+  </script>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/handlebars.js"></script>
+    <script src="js/ember.min.js"></script>
+    <script src="js//ember-data.min.js"></script>
+    <script src="js/app.js"></script>
+
+    </body>
+</html>
